@@ -1,0 +1,42 @@
+<header class="header">
+    <div class="container">
+        <a href="#" class="logo">
+            <img src="assets/img/logo.png" width="364" height="58" alt="logo" />
+        </a>
+
+        <div class="search-view" data-search-view>
+            <div class="search-wrapper">
+                <input type="search" name="search" [placeholder]="'label.header.placeholder.search' | translate"
+                    autocomplete="off" autocapitalize="off" class="search-field" data-search-field
+                    [(ngModel)]="searchTerm" (input)="search()" />
+                <span class="m-icon leading-icon">search</span>
+                <button class="icon-btn leading-icon has-state" aria-label="close search" data-search-toggler
+                    (click)="clearSearchResults()">
+                    <span class="m-icon">arrow_back</span>
+                </button>
+            </div>
+            <div class="search-result" data-search-result [class.active]="searching">
+                <ul class="view-list" data-search-list>
+                    <li *ngFor="let location of searchResults" class="view-item">
+                        <span class="m-icon">location_on</span>
+                        <div>
+                            <p class="item-title">{{ location.name }}</p>
+                            <p class="label-2 item-subtitle">{{ location.state || '' }} {{ location.country }}</p>
+                        </div>
+                        <a [href]="'#/weather?lat=' + location.lat + '&lon=' + location.lon" class="item-link has-state"
+                            [attr.aria-label]="location.name + ' weather'"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn has-state" aria-label="open search" data-search-toggler>
+                <span class="m-icon icon">search</span>
+            </button>
+            <a href="#/current-location" class="btn-primary has-state" data-current-location-btn>
+                <span class="m-icon">my_location</span>
+                <span class="span">{{ 'label.header.current.location' | translate }}</span>
+            </a>
+        </div>
+    </div>
+</header>
