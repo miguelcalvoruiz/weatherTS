@@ -7,13 +7,13 @@ import { TranslateService } from '../translate/translate.service';
 export class UtilityService {
 
   weekDayNames: string[] = [
+    "label.days.sunday",
     "label.days.monday",
     "label.days.tuesday",
     "label.days.wednesday",
     "label.days.thursday",
     "label.days.friday",
     "label.days.saturday",
-    "label.days.sundey",
   ];
 
   monthNames: string[] = [
@@ -38,12 +38,12 @@ export class UtilityService {
   }
 
   getDate(dateUnix: number, timezone: number): string {
-    const date = new Date((dateUnix + timezone) * 1000);
-    const weekDayName = this.translate(this.weekDayNames[date.getUTCDay()]);
-    const monthName = this.translate(this.monthNames[date.getUTCMonth()]);
-
-    return `${weekDayName} ${date.getUTCDate()}, ${monthName}`;
-  }
+    const date = new Date((dateUnix + timezone + new Date().getTimezoneOffset() * 60) * 1000);
+    const weekDayName = this.translate(this.weekDayNames[date.getDay()]);
+    const monthName = this.translate(this.monthNames[date.getMonth()]);
+  
+    return `${weekDayName} ${date.getDate()}, ${monthName}`;
+  }  
 
   getTime(timeUnix: number, timezone: number): string {
     const date = new Date((timeUnix + timezone) * 1000);

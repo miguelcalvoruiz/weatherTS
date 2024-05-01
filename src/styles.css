@@ -367,7 +367,7 @@ article.container::before {
     z-index: 1;
 }
 
-.section:not(:last-child) {
+.section {
     margin-block-end: 16px;
 }
 
@@ -417,7 +417,7 @@ article.container::before {
         top: 0;
     }
 
-    .section:not(:last-child) {
+    .section {
         margin-block: 20px;
     }
 }
