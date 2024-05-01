@@ -7,6 +7,8 @@ import { TranslatePipe } from './pipes/translate.pipe';
 import { TranslateService } from './services/translate/translate.service';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
+import { CapitalizeFirstWordPipe } from './pipes/capitalize-first-word.pipe';
 import { FormsModule } from '@angular/forms';
 
 export function translateFactory(provider: TranslateService) {
@@ -17,7 +19,9 @@ export function translateFactory(provider: TranslateService) {
   declarations: [
     AppComponent,
     HeaderComponent,
-    TranslatePipe
+    TranslatePipe,
+    CurrentWeatherComponent,
+    CapitalizeFirstWordPipe
   ],
   imports: [
     BrowserModule,

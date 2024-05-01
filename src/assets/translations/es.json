@@ -1,4 +1,24 @@
 {
     "label.header.current.location": "Posición actual",
-    "label.header.placeholder.search": "Buscar ciudad..."
+    "label.header.placeholder.search": "Buscar ciudad...",
+    "label.current.weather.now": "Ahora",
+    "label.days.monday": "Lunes",
+    "label.days.tuesday": "Martes",
+    "label.days.wednesday": "Miércoles",
+    "label.days.thursday": "Jueves",
+    "label.days.friday": "Viernes",
+    "label.days.saturday": "Sábado",
+    "label.days.sunday": "Domingo",
+    "label.months.january": "Ene",
+    "label.months.february": "Feb",
+    "label.months.march": "Mar",
+    "label.months.april": "Abr",
+    "label.months.may": "May",
+    "label.months.june": "Jun",
+    "label.months.july": "Jul",
+    "label.months.august": "Ago",
+    "label.months.september": "Sep",
+    "label.months.october": "Oct",
+    "label.months.november": "Nov",
+    "label.months.december": "Dic"
 }

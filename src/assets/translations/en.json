@@ -1,4 +1,24 @@
 {
-    "label.header.current.location": "Current location",
-    "label.header.placeholder.search": "Search city..."
+    "label.header.current.location": "Current Location",
+    "label.header.placeholder.search": "Search city...",
+    "label.current.weather.now": "Now",
+    "label.days.monday": "Monday",
+    "label.days.tuesday": "Tuesday",
+    "label.days.wednesday": "Wednesday",
+    "label.days.thursday": "Thursday",
+    "label.days.friday": "Friday",
+    "label.days.saturday": "Saturday",
+    "label.days.sunday": "Sunday",
+    "label.months.january": "Jan",
+    "label.months.february": "Feb",
+    "label.months.march": "Mar",
+    "label.months.april": "Apr",
+    "label.months.may": "May",
+    "label.months.june": "Jun",
+    "label.months.july": "Jul",
+    "label.months.august": "Aug",
+    "label.months.september": "Sep",
+    "label.months.october": "Oct",
+    "label.months.november": "Nov",
+    "label.months.december": "Dec"
 }

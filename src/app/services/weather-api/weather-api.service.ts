@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,32 +12,42 @@ export class WeatherApiService {
   private apiUrl = 'https://api.openweathermap.org/data/2.5';
   private apiURLGeo = 'https://api.openweathermap.org/geo/1.0';
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: any) { }
 
   fetchData(URL: string): Observable<any> {
-    return new Observable(observer => {
-      fetch(`${URL}&appid=${this.apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          observer.next(data);
-          observer.complete();
-        })
-        .catch(error => {
-          observer.error(error);
-        });
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      return new Observable(observer => {
+        fetch(`${URL}&lang=${navigator.language.split('-')[0]}&appid=${this.apiKey}`)
+          .then(response => response.json())
+          .then(data => {
+            observer.next(data);
+            observer.complete();
+          })
+          .catch(error => {
+            observer.error(error);
+          });
+      });
+    } else {
+      return new Observable(observer => {
+        observer.error('navigator is not available');
+      });
+    }
   }
 
-  getCurrentWeather(lat: number, lon: number): string {
-    return `${this.apiUrl}/weather?lat=${lat}&lon=${lon}&units=metric`;
+  getCurrentWeather(lat: number, lon: number): Observable<any> {
+    const url = `${this.apiUrl}/weather?lat=${lat}&lon=${lon}&units=metric`;
+    return this.fetchData(url);
   }
 
-  getForecast(lat: number, lon: number): string {
-    return `${this.apiUrl}/forecast?lat=${lat}&lon=${lon}&units=metric`;
+  getForecast(lat: number, lon: number): Observable<any> {
+    const url = `${this.apiUrl}/forecast?lat=${lat}&lon=${lon}&units=metric`;
+    return this.fetchData(url);
   }
 
-  getAirPollution(lat: number, lon: number): string {
-    return `${this.apiUrl}/air_pollution?lat=${lat}&lon=${lon}`;
+  getAirPollution(lat: number, lon: number): Observable<any> {
+    const url = `${this.apiUrl}/air_pollution?lat=${lat}&lon=${lon}`;
+    return this.fetchData(url);
   }
 
   getReverseGeo(lat: number, lon: number): string {

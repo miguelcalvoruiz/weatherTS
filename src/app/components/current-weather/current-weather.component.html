@@ -1,0 +1,24 @@
+<section class="section current-weather" aria-label="current-weather">
+    <div *ngIf="currentWeatherData" class="card card-lg current-weather-card">
+        <div class="card-title">
+            <h2 class="title-2">{{ 'label.current.weather.now' | translate }}</h2>
+        </div>
+        <div class="wrapper">
+            <p class="heading">{{ currentWeatherData.temp }}&deg;<sup>c</sup></p>
+            <img [src]="'assets/img/weather_icons/' + currentWeatherData.icon + '.png'" width="64" height="64"
+                [alt]="currentWeatherData.description" class="weather-icon" />
+        </div>
+        <p class="body-3">{{ currentWeatherData.description | capitalizeFirstWord }}</p>
+        <ul class="meta-list">
+            <li class="meta-item">
+                <span class="m-icon">calendar_today</span>
+                <p class="title-3 meta-text">{{ currentWeatherData.date }}</p>
+            </li>
+            <li class="meta-item">
+                <span class="m-icon">location_on</span>
+                <p class="title-3 meta-text">{{ currentWeatherData.location }}</p>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!currentWeatherData" class="loading"></div>
+</section>

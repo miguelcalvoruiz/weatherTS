@@ -33,7 +33,7 @@
     height: 100svh;
     background-color: var(--surface);
     color: var(--on-surface);
-    clip-path: circle(4% at calc(100%-102px) 5%);
+    clip-path: circle(4% at calc(100% - 102px) 5%);
     opacity: 0;
     visibility: hidden;
     z-index: 4;
