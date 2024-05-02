@@ -1,7 +1,8 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { UtilityService } from '../utility/utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class WeatherApiService {
   private apiURLGeo = 'https://api.openweathermap.org/geo/1.0';
 
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: any) { }
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: any,  private utilityService: UtilityService) { }
 
   fetchData(URL: string): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
@@ -43,6 +44,52 @@ export class WeatherApiService {
   getForecast(lat: number, lon: number): Observable<any> {
     const url = `${this.apiUrl}/forecast?lat=${lat}&lon=${lon}&units=metric`;
     return this.fetchData(url);
+  }
+
+  getProcessedForecast(lat: number, lon: number): Observable<any> {
+    return this.getForecast(lat, lon).pipe(
+      map(data => {
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours(), 0, 0, 0);
+        const forecastTimes = [0, 3, 6, 9, 12, 15, 18, 21];
+
+        const nextFiveDays = new Array(5).fill(null).map((_, index) => {
+          const nextDate = new Date(currentDate);
+          nextDate.setDate(currentDate.getDate() + index + 1);
+          return nextDate.toISOString().split('T')[0];
+        });
+
+        const uniqueDates: Set<string> = new Set();
+        const processedForecasts = data.list.reduce((acc: any[], forecast: any) => {
+          const forecastDate = forecast.dt_txt.split(' ')[0];
+          if (nextFiveDays.includes(forecastDate) && !uniqueDates.has(forecastDate)) {
+            uniqueDates.add(forecastDate);
+
+            const closestForecastTime = forecastTimes.reduce((prev, curr) => {
+              return (Math.abs(curr - currentDate.getHours()) < Math.abs(prev - currentDate.getHours()) ? curr : prev);
+            });
+            const forecastDateTime = new Date(forecast.dt_txt);
+            forecastDateTime.setHours(closestForecastTime, 0, 0, 0);
+
+            if (forecastDateTime.getTime() >= currentDate.getTime()) {
+              const { main: { temp_max }, weather } = forecast;
+              const [{ icon, description }] = weather;
+              const dayOfWeek = this.utilityService.weekDayNames[forecastDateTime.getUTCDay()];
+              acc.push({
+                temp_max,
+                icon,
+                description,
+                date: forecastDateTime,
+                dayOfWeek
+              });
+            }
+          }
+          return acc;
+        }, []);
+
+        return processedForecasts;
+      })
+    );
   }
 
   getAirPollution(lat: number, lon: number): Observable<any> {

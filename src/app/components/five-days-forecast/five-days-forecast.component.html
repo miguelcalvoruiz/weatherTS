@@ -1,11 +1,11 @@
 <section class="section forecast" aria-labelledby="forecast-label">
-    <h2 class="title-2" id="forecast-label">{{ "label.five.days.forecast.title" | translate }}</h2>
     <div class="card card-lg forecast-card">
+        <h2 class="title-2" id="forecast-label">{{ "label.five.days.forecast.title" | translate }}</h2>
         <ul>
             <li *ngFor="let forecast of forecasts" class="card-item">
                 <div class="icon-wrapper">
                     <img [src]="'assets/img/weather_icons/' + forecast.icon + '.png'" width="36" height="36"
-                        [alt]="forecast.description" class="weather-icon" [title]="forecast.description">
+                        [alt]="forecast.description" class="weather-icon" [title]="forecast.description | capitalizeFirstWord">
                     <span class="span">
                         <p class="title-2">{{ forecast.temp_max | parseInt }}&deg;</p>
                     </span>

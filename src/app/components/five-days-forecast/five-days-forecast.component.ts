@@ -10,8 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FiveDaysForecastComponent implements OnInit {
   forecasts: any[] = [];
-  lat: number | undefined;
-  lon: number | undefined;
+  lat!: number;
+  lon!: number;
 
   constructor(
     private weatherApiService: WeatherApiService, 
@@ -33,37 +33,15 @@ export class FiveDaysForecastComponent implements OnInit {
   }
 
   updateForecast(lat: number, lon: number): void {
-    this.weatherApiService.getForecast(lat, lon).subscribe((data: any) => {
-      const currentDate = new Date();
-      const nextFiveDays = new Array(5).fill(null).map((_, index) => {
-        const nextDate = new Date(currentDate);
-        nextDate.setDate(currentDate.getDate() + index + 1);
-        return nextDate.toISOString().split('T')[0];
-      });
-  
-      const uniqueDates: Set<string> = new Set();
-      this.forecasts = data.list.reduce((acc: any[], forecast: any) => {
-        const forecastDate = forecast.dt_txt.split(' ')[0];
-        if (nextFiveDays.includes(forecastDate) && !uniqueDates.has(forecastDate)) {
-          uniqueDates.add(forecastDate);
-  
-          const forecastTime = new Date(forecast.dt_txt).getTime() + (12 * 60 * 60 * 1000);
-          const { main: { temp_max }, weather } = forecast;
-          const [{ icon, description }] = weather;
-          const dateObj = new Date(forecastTime);
-          const dayOfWeek = this.utilityService.weekDayNames[dateObj.getUTCDay()];
-  
-          acc.push({
-            temp_max,
-            icon,
-            description,
-            date: dateObj,
-            dayOfWeek
-          });
-        }
-        return acc;
-      }, []);
-    });
+    this.weatherApiService.getProcessedForecast(lat, lon).subscribe(
+      processedData => {
+        this.forecasts = processedData;
+        console.log(this.forecasts);
+        
+      },
+      error => {
+        console.error('Error al obtener los pronósticos:', error);
+      }
+    );
   }
-  
 }

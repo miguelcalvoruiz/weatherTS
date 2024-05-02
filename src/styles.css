@@ -11,15 +11,15 @@
     --on-surface-variant: #7b7980;
     --on-surface-variant-2: #b9b6bf;
     --outline: #3e3d40;
-    --bg-aqi-1: #89e589;
+    --bg-aqi-1: #3eed3e;
     --on-bg-aqi-1: #1f331f;
-    --bg-aqi-2: #e5dd89;
+    --bg-aqi-2: #dbed3e;
     --on-bg-aqi-2: #33311f;
-    --bg-aqi-3: #e5c089;
+    --bg-aqi-3: #edc13e;
     --on-bg-aqi-3: #332b1f;
-    --bg-aqi-4: #e58989;
+    --bg-aqi-4: #ed933e;
     --on-bg-aqi-4: #331f1f;
-    --bg-aqi-5: #e589b7;
+    --bg-aqi-5: #ed3e3e;
     --on-bg-aqi-5: #331f29;
     --white: hsl(0, 0%, 100%);
     --white-alpha-4: hsla(0, 0%, 100%, 0.04);
@@ -35,7 +35,7 @@
 
     /* font size */
     --heading: 5.6rem;
-    --title-1: 3rem;
+    --title-1: 2rem;
     --title-2: 1.8rem;
     --title-3: 1.6rem;
     --body-1: 2.2rem;

@@ -9,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./current-weather.component.css']
 })
 export class CurrentWeatherComponent implements OnInit {
-  lat: number | undefined;
-  lon: number | undefined;
+  lat!: number;
+  lon!: number;
 
   currentWeatherData: any;
 

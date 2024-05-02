@@ -12,6 +12,7 @@ import { CapitalizeFirstWordPipe } from './pipes/capitalize-first-word.pipe';
 import { FormsModule } from '@angular/forms';
 import { FiveDaysForecastComponent } from './components/five-days-forecast/five-days-forecast.component';
 import { ParseIntPipe } from './pipes/parse-int.pipe';
+import { WeatherHighlightsComponent } from './components/weather-highlights/weather-highlights.component';
 
 export function translateFactory(provider: TranslateService) {
   return () => provider.getData();
@@ -25,7 +26,8 @@ export function translateFactory(provider: TranslateService) {
     CurrentWeatherComponent,
     CapitalizeFirstWordPipe,
     FiveDaysForecastComponent,
-    ParseIntPipe
+    ParseIntPipe,
+    WeatherHighlightsComponent
   ],
   imports: [
     BrowserModule,
