@@ -49,18 +49,11 @@ export class UtilityService {
     const date = new Date((timeUnix + timezone) * 1000);
     const hours = date.getUTCHours();
     const minutes = date.getUTCMinutes();
-    const period = hours >= 12 ? "PM" : "AM";
-
-    return `${hours % 12 || 12}:${minutes} ${period}`;
-  }
-
-  getHours(timeUnix: number, timezone: number): string {
-    const date = new Date((timeUnix + timezone) * 1000);
-    const hours = date.getUTCHours();
     
     const period = hours >= 12 ? "PM" : "AM";
+    const formatedminutes = minutes < 10 ? '0' + minutes : minutes;
 
-    return `${hours % 12 || 12} ${period}`;
+    return `${hours % 12 || 12}:${formatedminutes} ${period}`;
   }
 
   mpsToKmh(mps: number): number {

@@ -1,0 +1,63 @@
+.slider-container {
+    overflow-x: auto;
+    margin-inline: -16px;
+}
+
+.slider-container::-webkit-scrollbar {
+    display: none;
+}
+
+.slider-list {
+    display: flex;
+    gap: 12px;
+}
+
+.slider-list:first-child {
+    margin-block-end: 16px;
+}
+
+.slider-list::before,
+.slider-list::after {
+    content: "";
+    min-width: 4px;
+}
+
+.slider-item {
+    min-width: 110px;
+    flex: 1 1 100%;
+}
+
+.slider-card {
+    text-align: center;
+}
+
+.slider-item .weather-icon {
+    margin-inline: auto;
+    margin-block: 12px;
+}
+
+@media (min-width: 768px) {
+    .slider-container {
+        margin-inline: 0 -24px;
+        border-bottom-left-radius: var(--radius-16);
+        border-top-left-radius: var(--radius-16);
+    }
+
+    .slider-list::before {
+        display: none;
+    }
+
+    .slider-list::after {
+        min-width: 12px;
+    }
+
+    .card-sm {
+        padding: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .slider-list {
+        gap: 16px;
+    }
+}

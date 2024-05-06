@@ -40,5 +40,6 @@
     "label.utility.air.quality.level.poor": "Pobre",
     "label.utility.air.quality.message.poor": "Todos pueden comenzar a experimentar efectos en la salud; los miembros de grupos sensibles pueden experimentar efectos más graves en la salud.",
     "label.utility.air.quality.level.very.poor": "Muy Pobre",
-    "label.utility.air.quality.message.very.poor": "Advertencias de salud sobre condiciones de emergencia. Es más probable que toda la población se vea afectada."
+    "label.utility.air.quality.message.very.poor": "Advertencias de salud sobre condiciones de emergencia. Es más probable que toda la población se vea afectada.",
+    "label.hourly.section.title": "Hoy a las"
 }
