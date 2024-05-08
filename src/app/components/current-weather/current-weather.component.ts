@@ -21,14 +21,9 @@ export class CurrentWeatherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.lat = parseFloat(params['lat']);
-      this.lon = parseFloat(params['lon']);
-
-      if (!isNaN(this.lat) && !isNaN(this.lon)) {
-        this.updateWeather(this.lat, this.lon);
-      } else {
-        console.error('Coordenadas no válidas en la URL');
+    this.utilityService.getCoords().subscribe(coords => {
+      if (coords) {
+        this.updateWeather(coords.lat, coords.lon);
       }
     });
   }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { UtilityService } from './../../services/utility/utility.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { WeatherApiService } from '../../services/weather-api/weather-api.service';
-import { UtilityService } from '../../services/utility/utility.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,24 +10,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FiveDaysForecastComponent implements OnInit {
   forecasts: any[] = [];
-  lat!: number;
-  lon!: number;
 
   constructor(
-    private weatherApiService: WeatherApiService, 
-    private utilityService: UtilityService,
-    private route: ActivatedRoute
+    private weatherApiService: WeatherApiService,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.lat = parseFloat(params['lat']);
-      this.lon = parseFloat(params['lon']);
-
-      if (!isNaN(this.lat) && !isNaN(this.lon)) {
-        this.updateForecast(this.lat, this.lon);
-      } else {
-        console.error('Coordenadas no válidas en la URL');
+    this.utilityService.getCoords().subscribe(coords => {
+      if (coords) {
+        this.updateForecast(coords.lat, coords.lon);
       }
     });
   }
@@ -36,8 +28,6 @@ export class FiveDaysForecastComponent implements OnInit {
     this.weatherApiService.getProcessedForecast(lat, lon).subscribe(
       processedData => {
         this.forecasts = processedData;
-        console.log(this.forecasts);
-        
       },
       error => {
         console.error('Error al obtener los pronósticos:', error);

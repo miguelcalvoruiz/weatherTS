@@ -20,14 +20,9 @@ export class HourlyForecastComponent {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.lat = parseFloat(params['lat']);
-      this.lon = parseFloat(params['lon']);
-
-      if (!isNaN(this.lat) && !isNaN(this.lon)) {
-        this.updateForecast(this.lat, this.lon);
-      } else {
-        console.error('Invalid coordinates in URL');
+    this.utilityService.getCoords().subscribe(coords => {
+      if (coords) {
+        this.updateForecast(coords.lat, coords.lon);
       }
     });
   }
@@ -57,7 +52,7 @@ export class HourlyForecastComponent {
       });
     });
   }
-  
+
   mpsToKmh(mps: number): number {
     return this.utilityService.mpsToKmh(mps);
   }

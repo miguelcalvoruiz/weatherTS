@@ -1,13 +1,20 @@
 <app-header></app-header>
 <main>
-  <article class="container">
-    <div class="content-left">
-      <app-current-weather></app-current-weather>
-      <app-five-days-forecast></app-five-days-forecast>
-    </div>
-    <div class="content-right">
-      <app-weather-highlights></app-weather-highlights>
-      <app-hourly-forecast></app-hourly-forecast>
-    </div>
-  </article>
+  <div *ngIf="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  
+  <div *ngIf="!loading" class="component-loaded">
+    <article class="container">
+      <div class="content-left">
+        <app-current-weather></app-current-weather>
+        <app-five-days-forecast></app-five-days-forecast>
+      </div>
+      <div class="content-right">
+        <app-weather-highlights></app-weather-highlights>
+        <app-hourly-forecast></app-hourly-forecast>
+      </div>
+    </article>
+  </div>
 </main>
+

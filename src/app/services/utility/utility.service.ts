@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '../translate/translate.service';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,31 @@ export class UtilityService {
     "label.months.december",
   ];
 
+  private coordsSubject = new BehaviorSubject<{ lat: number, lon: number } | null>(null);
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
   constructor(private translateService: TranslateService) { }
 
   private translate(key: string): string {
     return this.translateService.getTranslate(key);
+  }
+
+  setLoading(loading: boolean) {
+    this.loadingSubject.next(loading);
+  }
+
+  setCoords(lat: number, lon: number) {
+    if (!isNaN(lat) && !isNaN(lon)) {
+      this.coordsSubject.next({ lat, lon });
+    } else {
+      console.error('Coordenadas no válidas');
+    }
+  }
+
+  getCoords() {
+    return this.coordsSubject.asObservable();
   }
 
   getDate(dateUnix: number, timezone: number): string {

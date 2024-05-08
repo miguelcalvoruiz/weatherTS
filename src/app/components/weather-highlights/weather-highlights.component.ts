@@ -26,14 +26,9 @@ export class WeatherHighlightsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.lat = parseFloat(params['lat']);
-      this.lon = parseFloat(params['lon']);
-
-      if (!isNaN(this.lat) && !isNaN(this.lon)) {
-        this.updateHighlights(this.lat, this.lon);
-      } else {
-        console.error('Coordenadas no válidas en la URL');
+    this.utilityService.getCoords().subscribe(coords => {
+      if (coords) {
+        this.updateHighlights(coords.lat, coords.lon);
       }
     });
   }
@@ -57,7 +52,7 @@ export class WeatherHighlightsComponent implements OnInit {
         this.sunriseTime = this.utilityService.getTime(weatherData.sys.sunrise, weatherData.timezone);
         this.sunsetTime = this.utilityService.getTime(weatherData.sys.sunset, weatherData.timezone);
         this.feelsLike = weatherData.main.feels_like;
-        this.visibility = weatherData.visibility/1000;
+        this.visibility = weatherData.visibility / 1000;
         this.pressure = weatherData.main.pressure;
         this.humidity = weatherData.main.humidity;
       });
