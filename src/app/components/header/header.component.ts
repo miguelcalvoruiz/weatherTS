@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { WeatherApiService } from '../../services/weather-api/weather-api.service';
 import { Router } from '@angular/router';
 
@@ -7,16 +7,18 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   searchTerm: string = '';
   searchResults: any[] = [];
   searching: boolean = false;
   searchTimeout: any;
 
-  constructor(private weatherApiService: WeatherApiService, private router: Router) { }
+  constructor(private weatherApiService: WeatherApiService, private router: Router) {
+  }
 
-  ngOnInit(): void {
+  toggleSearch(): void {
+    this.searching = !this.searching;
   }
 
   search(): void {
@@ -35,14 +37,14 @@ export class HeaderComponent implements OnInit {
   }
 
   clearSearchResults(): void {
-    if (!this.searchTerm) {
-      this.searchResults = [];
-      this.searching = false;
-    }
+    this.searchTerm = '';
+    this.searchResults = [];
+    this.searching = false;
   }
 
   navigateToWeather(lat: number, lon: number, event: Event): void {
     event.preventDefault();
+    this.clearSearchResults();
     this.router.navigate(['/weather'], { queryParams: { lat, lon } });
   }
 }
