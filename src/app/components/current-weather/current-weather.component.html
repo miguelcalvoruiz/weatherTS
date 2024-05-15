@@ -1,14 +1,19 @@
 <section class="section current-weather" aria-label="current-weather">
     <div *ngIf="currentWeatherData" class="card card-lg current-weather-card">
+        <video class="video-background" autoplay loop muted playsinline>
+            <source [src]="'assets/img/animations/' + backgroundVideo" type="video/mp4">
+          </video>
         <div class="card-title">
             <h2 class="title-2">{{ 'label.current.weather.now' | translate }}</h2>
         </div>
         <div class="wrapper">
             <p class="heading">{{ currentWeatherData.temp }}&deg;<sup>c</sup></p>
-            <img [src]="'assets/img/weather_icons/' + currentWeatherData.icon + '.png'" width="64" height="64"
+        </div>
+        <div class="weather-description">
+            <p class="body-2">{{ currentWeatherData.description | capitalizeFirstWord }}</p>
+            <img [src]="'assets/img/weather_icons/' + currentWeatherData.icon + '.png'" width="15" height="32"
                 [alt]="currentWeatherData.description" class="weather-icon" />
         </div>
-        <p class="body-3">{{ currentWeatherData.description | capitalizeFirstWord }}</p>
         <ul class="meta-list">
             <li class="meta-item">
                 <span class="m-icon">calendar_today</span>
@@ -20,5 +25,4 @@
             </li>
         </ul>
     </div>
-    <div *ngIf="!currentWeatherData" class="loading"></div>
 </section>
