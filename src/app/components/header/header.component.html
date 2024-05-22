@@ -1,0 +1,42 @@
+<header class="header">
+    <div class="container">
+        <a class="logo">
+            <img src="assets/img/logo.png" alt="logo" />
+        </a>
+
+        <div class="search-view" [class.active]="searching">
+            <div class="search-wrapper">
+                <input type="search" name="search" [placeholder]="'label.header.placeholder.search' | translate"
+                    autocomplete="off" autocapitalize="off" class="search-field" [(ngModel)]="searchTerm"
+                    (input)="search()" />
+                <span class="m-icon leading-icon">search</span>
+                <button class="icon-btn leading-icon has-state" aria-label="close search"
+                    (click)="clearSearchResults()">
+                    <span class="m-icon">arrow_back</span>
+                </button>
+            </div>
+            <div class="search-result" [class.active]="searching">
+                <ul class="view-list">
+                    <li *ngFor="let location of searchResults" class="view-item">
+                        <span class="m-icon">location_on</span>
+                        <div>
+                            <p class="item-title">{{ location.name }}</p>
+                            <p class="label-2 item-subtitle">{{ location.state || '' }} {{ location.country }}</p>
+                        </div>
+                        <a href="#" (click)="navigateToWeather(location.lat, location.lon, $event)"
+                            class="item-link has-state" [attr.aria-label]="location.name + ' weather'"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn has-state" aria-label="open search" (click)="toggleSearch()">
+                <span class="m-icon icon">search</span>
+            </button>
+            <a href="/current-location" class="btn-primary has-state">
+                <span class="m-icon">my_location</span>
+                <span class="span">{{ 'label.header.current.location' | translate }}</span>
+            </a>
+        </div>
+    </div>
+</header>
