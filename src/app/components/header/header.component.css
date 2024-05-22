@@ -24,6 +24,10 @@
     padding-inline: 16px;
 }
 
+.item-title {
+    margin: 0 0 2px;
+}
+
 .search-view {
     position: fixed;
     top: 0;

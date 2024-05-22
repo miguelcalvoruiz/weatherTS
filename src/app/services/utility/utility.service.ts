@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '../translate/translate.service';
 import { BehaviorSubject, map } from 'rxjs';
+import { WeatherVideos } from '../../models/weather-videos';
 
 @Injectable({
   providedIn: 'root'
@@ -83,9 +84,36 @@ export class UtilityService {
     return mph / 1000;
   }
 
+  rainProbability(pop: number): string{
+    const probability = Math.round((pop * 100) / 5) * 5;
+    return probability + '%';
+  }
+
   getApiText(level: number): { level: string, message: string } {
     return this.apiText[level] || { level: "", message: "" };
   }
+
+  getBackgroundVideo(weatherCondition: string): string {
+    const videos: WeatherVideos = {
+      Clear: 'clear-day.mp4',
+      Clouds: 'cloudy.mp4',
+      Rain: 'rainy.mp4',
+      Drizzle: 'rainy.mp4',
+      Thunderstorm: 'thunderstorm.mp4',
+      Snow: 'snowy-day.mp4',
+      Mist: 'haze.mp4',
+      Smoke: 'haze.mp4',
+      Haze: 'haze.mp4',
+      Dust: 'dust.mp4',
+      Fog: 'haze.mp4',
+      Sand: 'haze.mp4',
+      Ash: 'haze.mp4',
+      Squall: 'rainy.mp4',
+      Tornado: 'tornado.mp4'
+    };
+    return videos[weatherCondition] || 'cloudy.mp4';
+  }
+
 
   public apiText: { [key: number]: { level: string, message: string } } = {
     1: {

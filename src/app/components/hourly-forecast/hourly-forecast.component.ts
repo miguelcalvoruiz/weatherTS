@@ -12,6 +12,8 @@ export class HourlyForecastComponent {
   forecastList: any[] = [];
   lat: number | undefined;
   lon: number | undefined;
+  activeTab: string = 'weather';
+  showrProbability: boolean = false;
 
   constructor(
     private weatherApiService: WeatherApiService,
@@ -38,8 +40,9 @@ export class HourlyForecastComponent {
       });
 
       this.forecastList = futureForecasts.slice(0, 8).map((data: any) => {
-        const { dt_txt, main: { temp }, weather, wind: { deg: windDirection, speed: windSpeed } } = data;
+        const { dt_txt, main: { temp }, weather, wind: { deg: windDirection, speed: windSpeed }, pop } = data;
         const [{ icon, description }] = weather;
+        const probabilityOfRain = pop;
         const dateTime = new Date(dt_txt);
         return {
           dateTime,
@@ -47,7 +50,8 @@ export class HourlyForecastComponent {
           icon,
           description,
           windDirection,
-          windSpeed
+          windSpeed,
+          probabilityOfRain
         };
       });
     });
@@ -55,5 +59,16 @@ export class HourlyForecastComponent {
 
   mpsToKmh(mps: number): number {
     return this.utilityService.mpsToKmh(mps);
+  }
+
+  rainProbability(pop: number): string {
+    if (pop > 0.3) {
+      this.showrProbability = true;
+    }
+    return this.utilityService.rainProbability(pop);
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
   }
 }
