@@ -1,29 +1,27 @@
 <section class="section current-weather" aria-label="current-weather">
-    <div *ngIf="currentWeatherData" class="card card-lg current-weather-card">
-      <video class="video-background" autoplay loop muted playsinline>
-        <source [src]="'assets/img/animations/' + backgroundVideo" type="video/mp4">
-      </video>
-      <div class="card-title">
-        <h2 class="title-2">{{ 'label.current.weather.now' | translate }}</h2>
-      </div>
-      <div class="wrapper">
-        <p class="heading">{{ currentWeatherData.temp }}&deg;<sup>c</sup></p>
-      </div>
-      <div class="weather-description">
-        <p class="body-2">{{ currentWeatherData.description | capitalizeFirstWord }}</p>
-        <img [src]="'assets/img/weather_icons/' + currentWeatherData.icon + '.png'" width="32" height="32"
-          [alt]="currentWeatherData.description" class="weather-icon" />
-      </div>
-      <ul class="meta-list">
-        <li class="meta-item">
-          <span class="m-icon">calendar_today</span>
-          <p class="title-3 meta-text">{{ currentWeatherData.date }}</p>
-        </li>
-        <li class="meta-item">
-          <span class="m-icon">location_on</span>
-          <p class="title-3 meta-text">{{ currentWeatherData.location }}</p>
-        </li>
-      </ul>
+  <div *ngIf="currentWeatherData" class="card card-lg current-weather-card">
+    <video #videoElement class="video-background" autoplay loop muted playsinline>
+      <source [src]="'assets/img/animations/' + backgroundVideo" type="video/webm">
+    </video>
+    <div class="card-title">
+      <h2 class="title-2">{{ 'label.current.weather.now' | translate }}</h2>
     </div>
-  </section>
-  
+    <div class="wrapper">
+      <p class="heading">{{ currentWeatherData.temp }}&deg;<sup>c</sup></p>
+    </div>
+    <div class="weather-description">
+      <p class="body-2">{{ currentWeatherData.description | capitalizeFirstWord }}</p>
+      <img [src]="'assets/img/weather_icons/' + currentWeatherData.icon + '.png'" width="32" height="32" [alt]="currentWeatherData.description" class="weather-icon" />
+    </div>
+    <ul class="meta-list">
+      <li class="meta-item">
+        <span class="m-icon">calendar_today</span>
+        <p class="title-3 meta-text">{{ currentWeatherData.date }}</p>
+      </li>
+      <li class="meta-item">
+        <span class="m-icon">location_on</span>
+        <p class="title-3 meta-text">{{ currentWeatherData.location }}</p>
+      </li>
+    </ul>
+  </div>
+</section>

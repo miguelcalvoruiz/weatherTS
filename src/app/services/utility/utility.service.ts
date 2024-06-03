@@ -95,23 +95,23 @@ export class UtilityService {
 
   getBackgroundVideo(weatherCondition: string): string {
     const videos: WeatherVideos = {
-      Clear: 'clear-day.mp4',
-      Clouds: 'cloudy.mp4',
-      Rain: 'rainy.mp4',
-      Drizzle: 'rainy.mp4',
-      Thunderstorm: 'thunderstorm.mp4',
-      Snow: 'snowy-day.mp4',
-      Mist: 'haze.mp4',
-      Smoke: 'haze.mp4',
-      Haze: 'haze.mp4',
-      Dust: 'dust.mp4',
-      Fog: 'haze.mp4',
-      Sand: 'haze.mp4',
-      Ash: 'haze.mp4',
-      Squall: 'rainy.mp4',
-      Tornado: 'tornado.mp4'
+      Clear: 'clear-day.webm',
+      Clouds: 'cloudy.webm',
+      Rain: 'rainy.webm',
+      Drizzle: 'rainy.webm',
+      Thunderstorm: 'thunderstorm.webm',
+      Snow: 'snowy-day.webm',
+      Mist: 'haze.webm',
+      Smoke: 'haze.webm',
+      Haze: 'haze.webm',
+      Dust: 'dust.webm',
+      Fog: 'haze.webm',
+      Sand: 'haze.webm',
+      Ash: 'haze.webm',
+      Squall: 'rainy.webm',
+      Tornado: 'tornado.webm'
     };
-    return videos[weatherCondition] || 'cloudy.mp4';
+    return videos[weatherCondition] || 'cloudy.webm';
   }
 
 

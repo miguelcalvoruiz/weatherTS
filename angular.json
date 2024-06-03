@@ -24,6 +24,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/weather-ts-app",
+            "baseHref": "/weatherTS/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
