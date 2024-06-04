@@ -16,8 +16,12 @@ export class AppComponent implements OnInit {
   minimumSpinnerDisplayTime = 1000;
   lastNavigationStart!: number;
 
-  constructor(private geolocationService: GeolocationService, private router: Router, private route: ActivatedRoute, private utilityService: UtilityService) {
-  }
+  constructor(
+    private geolocationService: GeolocationService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private utilityService: UtilityService
+  ) {}
 
   ngOnInit(): void {
     this.geolocationService.getCurrentPosition().subscribe(
@@ -33,9 +37,9 @@ export class AppComponent implements OnInit {
     );
 
     this.route.queryParams.subscribe(params => {
-        const lat = parseFloat(params['lat']);
-        const lon = parseFloat(params['lon']);
-        this.utilityService.setCoords(lat, lon);
+      const lat = parseFloat(params['lat']);
+      const lon = parseFloat(params['lon']);
+      this.utilityService.setCoords(lat, lon);
     });
 
     this.router.events.subscribe(event => {
