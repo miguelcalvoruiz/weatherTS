@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { UtilityService } from '../utility/utility.service';
 
@@ -51,7 +51,7 @@ export class WeatherApiService {
       map(data => {
         const currentDate = new Date();
         currentDate.setHours(currentDate.getHours(), 0, 0, 0);
-        const forecastTimes = [0, 3, 6, 9, 12, 15, 18, 21];
+        const currentHour = currentDate.getHours();
 
         const nextFiveDays = new Array(5).fill(null).map((_, index) => {
           const nextDate = new Date(currentDate);
@@ -59,34 +59,32 @@ export class WeatherApiService {
           return nextDate.toISOString().split('T')[0];
         });
 
-        const uniqueDates: Set<string> = new Set();
-        const processedForecasts = data.list.reduce((acc: any[], forecast: any) => {
-          const forecastDate = forecast.dt_txt.split(' ')[0];
-          if (nextFiveDays.includes(forecastDate) && !uniqueDates.has(forecastDate)) {
-            uniqueDates.add(forecastDate);
+        const processedForecasts = nextFiveDays.map(date => {
+          const dayForecasts = data.list.filter((forecast: any) => forecast.dt_txt.startsWith(date));
 
-            const closestForecastTime = forecastTimes.reduce((prev, curr) => {
-              return (Math.abs(curr - currentDate.getHours()) < Math.abs(prev - currentDate.getHours()) ? curr : prev);
+          if (dayForecasts.length > 0) {
+            const closestForecast = dayForecasts.reduce((prev: any, curr: any) => {
+              const prevHour = new Date(prev.dt_txt).getHours();
+              const currHour = new Date(curr.dt_txt).getHours();
+              return Math.abs(currHour - currentHour) < Math.abs(prevHour - currentHour) ? curr : prev;
             });
-            const forecastDateTime = new Date(forecast.dt_txt);
-            forecastDateTime.setHours(closestForecastTime, 0, 0, 0);
 
-            if (forecastDateTime.getTime() >= currentDate.getTime()) {
-              const { main: { temp_max }, weather } = forecast;
-              const [{ icon, description }] = weather;
-              const dayOfWeek = this.utilityService.weekDayNames[forecastDateTime.getUTCDay()];
-              acc.push({
-                temp_max,
-                icon,
-                description,
-                date: forecastDateTime,
-                dayOfWeek
-              });
-            }
+            const { main: { temp_max }, weather } = closestForecast;
+            const [{ icon, description }] = weather;
+            const forecastDate = new Date(closestForecast.dt_txt);
+            const dayOfWeek = this.utilityService.weekDayNames[forecastDate.getUTCDay()];
+
+            return {
+              temp_max,
+              icon,
+              description,
+              date: forecastDate,
+              dayOfWeek
+            };
           }
-          return acc;
-        }, []);
 
+          return null;
+        }).filter((forecast: any) => forecast !== null);
         return processedForecasts;
       })
     );
